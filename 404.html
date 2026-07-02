@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ページ作成中 | すてきな鳩ランド</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&family=M+PLUS+Rounded+1c:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --yellow:#FFDC74;
+  --yellow-light:#FFEEB5;
+  --cream:#FFF9EA;
+  --blue:#5A9BC4;
+  --navy:#3D5568;
+  --orange:#F0965A;
+  --pigeon:#9BAFC0;
+  --white:#FFFFFF;
+  --radius:22px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'M PLUS Rounded 1c','Zen Maru Gothic',sans-serif;
+  color:var(--navy);
+  background:var(--cream);
+  line-height:1.8;
+  overflow-x:hidden;
+  min-height:100dvh;
+  display:flex;flex-direction:column;
+}
+h1{font-family:'Zen Maru Gothic',sans-serif}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+
+/* ===== ヘッダー(TOP踏襲) ===== */
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,249,234,.95);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid rgba(61,85,104,.18);
+}
+.header-inner{
+  max-width:1080px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 20px;
+}
+.logo{
+  font-family:'Zen Maru Gothic';font-weight:900;font-size:1.15rem;
+  letter-spacing:.06em;
+}
+nav ul{display:flex;list-style:none;align-items:center}
+nav li{display:flex;align-items:center}
+nav li + li::before{
+  content:"";display:block;width:1px;height:16px;
+  background:rgba(61,85,104,.35);
+}
+nav a{
+  font-weight:700;font-size:.88rem;
+  padding:6px 16px;
+  transition:color .2s;
+}
+nav a:hover,nav a:focus-visible{color:var(--orange)}
+
+.menu-btn{
+  display:none;
+  background:none;border:none;cursor:pointer;
+  width:44px;height:44px;position:relative;z-index:210;
+}
+.menu-btn span{
+  display:block;width:24px;height:3px;border-radius:2px;
+  background:var(--navy);margin:5px auto;
+  transition:transform .25s,opacity .25s;
+}
+.menu-btn[aria-expanded="true"] span:nth-child(1){transform:translateY(8px) rotate(45deg)}
+.menu-btn[aria-expanded="true"] span:nth-child(2){opacity:0}
+.menu-btn[aria-expanded="true"] span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+
+.drawer{
+  position:fixed;top:0;right:0;z-index:200;
+  width:min(84vw,340px);height:100dvh;
+  background:var(--white);
+  box-shadow:-6px 0 24px rgba(61,85,104,.18);
+  transform:translateX(105%);
+  transition:transform .3s ease;
+  padding:76px 24px 24px;
+  overflow-y:auto;
+}
+.drawer.open{transform:none}
+.drawer ul{list-style:none;display:grid;gap:14px}
+.drawer a{
+  display:block;text-align:center;
+  font-weight:900;font-size:1.02rem;
+  padding:13px 10px;
+  border:3px solid var(--yellow);
+  border-radius:999px;
+  background:var(--cream);
+  transition:background .2s,transform .15s;
+}
+.drawer a:active{transform:scale(.97)}
+.drawer a:hover{background:var(--yellow-light)}
+.drawer-overlay{
+  position:fixed;inset:0;z-index:150;
+  background:rgba(61,85,104,.35);
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.drawer-overlay.show{opacity:1;pointer-events:auto}
+
+/* ===== 404本文 ===== */
+main{
+  flex:1;
+  display:flex;align-items:center;justify-content:center;
+  padding:60px 20px;
+  text-align:center;
+}
+.notfound .hato{
+  width:110px;margin:0 auto 10px;
+  animation:bob .6s ease-in-out infinite alternate;
+}
+@keyframes bob{from{transform:translateY(0)}to{transform:translateY(-8px)}}
+.notfound h1{
+  font-size:1.6rem;font-weight:900;margin-bottom:10px;
+}
+.notfound p{
+  font-weight:700;margin-bottom:28px;
+}
+.back-btn{
+  display:inline-block;
+  font-weight:900;font-size:1.05rem;
+  background:var(--yellow);
+  border:3px solid var(--navy);
+  border-radius:999px;
+  padding:14px 44px;
+  transition:transform .18s,box-shadow .18s,background .18s;
+  box-shadow:0 5px 0 var(--navy);
+}
+.back-btn:hover,.back-btn:focus-visible{
+  transform:translateY(-3px);
+  box-shadow:0 8px 0 var(--navy);
+  background:var(--yellow-light);
+}
+.back-btn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--navy)}
+
+/* ===== フッター(ロゴ版) ===== */
+footer{
+  background:var(--navy);color:var(--cream);
+  padding:40px 20px 28px;text-align:center;
+}
+.foot-logo{display:flex;justify-content:center;margin-bottom:14px}
+.foot-logo img{width:200px}
+footer small{font-size:.78rem;opacity:.8}
+
+@media(max-width:760px){
+  nav{display:none}
+  .menu-btn{display:block}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .drawer{transition:none}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a class="logo" href="index.html">すてきな鳩ランド</a>
+    <nav aria-label="メインメニュー">
+      <ul>
+        <li><a href="index.html">TOP</a></li>
+        <li><a href="personal.html">自己紹介</a></li>
+        <li><a href="scenario.html">シナリオ</a></li>
+        <li><a href="gallery.html">ギャラリー</a></li>
+        <li><a href="request.html">ご依頼</a></li>
+        <li><a href="guideline.html">ガイドライン</a></li>
+      </ul>
+    </nav>
+    <button class="menu-btn" aria-expanded="false" aria-controls="drawer" aria-label="メニューを開く">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<div class="drawer-overlay" id="drawerOverlay"></div>
+<div class="drawer" id="drawer" aria-label="メニュー">
+  <ul>
+    <li><a href="index.html">TOP</a></li>
+    <li><a href="personal.html">自己紹介</a></li>
+    <li><a href="scenario.html">シナリオ</a></li>
+    <li><a href="gallery.html">ギャラリー</a></li>
+    <li><a href="request.html">ご依頼</a></li>
+    <li><a href="guideline.html">ガイドライン</a></li>
+  </ul>
+</div>
+
+<main>
+  <div class="notfound">
+    <img class="hato" src="assets/nyaruhato.png" alt="">
+    <h1>このページは作成中です！</h1>
+    <p>もうちょっと待っててね～</p>
+    <a class="back-btn" href="index.html">TOPに戻る</a>
+  </div>
+</main>
+
+<footer>
+  <div class="foot-logo">
+    <img src="assets/rogo.png" alt="すてきな鳩ランド">
+  </div>
+  <small>© すてきな鳩ランド / よあけ</small>
+</footer>
+
+<script>
+const btn = document.querySelector('.menu-btn');
+const drawer = document.getElementById('drawer');
+const overlay = document.getElementById('drawerOverlay');
+function toggleMenu(open){
+  btn.setAttribute('aria-expanded', open);
+  btn.setAttribute('aria-label', open ? 'メニューを閉じる' : 'メニューを開く');
+  drawer.classList.toggle('open', open);
+  overlay.classList.toggle('show', open);
+}
+btn.addEventListener('click', ()=> toggleMenu(btn.getAttribute('aria-expanded')!=='true'));
+overlay.addEventListener('click', ()=> toggleMenu(false));
+drawer.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> toggleMenu(false)));
+</script>
+</body>
+</html>
