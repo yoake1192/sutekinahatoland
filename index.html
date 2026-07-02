@@ -101,6 +101,16 @@ nav a:hover,nav a:focus-visible{color:var(--orange)}
 }
 .drawer a:active{transform:scale(.97)}
 .drawer a:hover{background:var(--yellow-light)}
+.drawer-close{
+  position:absolute;top:16px;right:16px;
+  width:42px;height:42px;
+  border:none;border-radius:50%;
+  background:var(--yellow);color:var(--navy);
+  font-size:1.15rem;font-weight:900;
+  cursor:pointer;
+  transition:transform .15s;
+}
+.drawer-close:active{transform:scale(.9)}
 .drawer-overlay{
   position:fixed;inset:0;z-index:150;
   background:rgba(61,85,104,.35);
@@ -263,9 +273,9 @@ footer small{font-size:.78rem;opacity:.8}
   .hero-text{padding-bottom:0}
   .hero-logo img{max-width:340px;margin:0 auto}
   .hero-intro{margin:22px auto 26px;font-size:.92rem}
-  .hero-visual{padding-bottom:70px}
-  .hero-visual img{max-height:440px}
-  .parade{bottom:8px;height:52px}
+  .hero-visual{margin-top:-34px;padding-bottom:0;position:relative;z-index:1}
+  .hero-visual img{max-height:480px}
+  .parade{bottom:0;height:52px;z-index:2}
   .parade .hato{width:44px;height:44px}
   .about-grid{grid-template-columns:1fr;text-align:center;justify-items:center;padding:26px 18px}
   .about-icon{width:160px;height:160px}
@@ -300,6 +310,7 @@ footer small{font-size:.78rem;opacity:.8}
 
 <div class="drawer-overlay" id="drawerOverlay"></div>
 <div class="drawer" id="drawer" aria-label="メニュー">
+  <button class="drawer-close" id="drawerClose" aria-label="メニューを閉じる">✕</button>
   <ul>
     <li><a href="index.html">TOP</a></li>
     <li><a href="personal.html">自己紹介</a></li>
@@ -413,6 +424,7 @@ function toggleMenu(open){
 btn.addEventListener('click', ()=> toggleMenu(btn.getAttribute('aria-expanded')!=='true'));
 overlay.addEventListener('click', ()=> toggleMenu(false));
 drawer.querySelectorAll('a').forEach(a=> a.addEventListener('click', ()=> toggleMenu(false)));
+document.getElementById('drawerClose').addEventListener('click', ()=> toggleMenu(false));
 </script>
 </body>
 </html>
