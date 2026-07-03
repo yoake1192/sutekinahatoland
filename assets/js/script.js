@@ -53,10 +53,89 @@ function initMarquee() {
   window.addEventListener('load', fillMarquee);
 }
 
+// ===== ギャラリー タブ切り替え(gallery.htmlのみ・要素がなければ何もしない) =====
+function initGalleryTabs() {
+  const tabs = document.querySelectorAll('.tab');
+  const arts = document.querySelectorAll('.art');
+  const empty = document.getElementById('empty');
+  if (!tabs.length || !arts.length) return;
+
+  function showCat(cat) {
+    let count = 0;
+    arts.forEach((a) => {
+      const show = a.dataset.cat === cat;
+      a.hidden = !show;
+      if (show) {
+        count++;
+        a.style.animation = 'none';
+        a.offsetHeight; // アニメーション再生用リセット
+        a.style.animation = '';
+      }
+    });
+    if (empty) empty.hidden = count > 0;
+    tabs.forEach((t) => t.setAttribute('aria-selected', t.dataset.cat === cat));
+  }
+
+  tabs.forEach((t) => t.addEventListener('click', () => showCat(t.dataset.cat)));
+  showCat(tabs[0].dataset.cat); // 初期表示
+}
+
+// ===== ライトボックス(gallery.htmlのみ・要素がなければ何もしない) =====
+function initLightbox() {
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxClose = document.getElementById('lightboxClose');
+  const arts = document.querySelectorAll('.art');
+  if (!lightbox || !lightboxImg || !lightboxClose) return;
+
+  arts.forEach((a) => {
+    a.addEventListener('click', () => {
+      const img = a.querySelector('img');
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      lightbox.classList.add('show');
+      document.body.style.overflow = 'hidden';
+    });
+  });
+
+  function closeLightbox() {
+    lightbox.classList.remove('show');
+    document.body.style.overflow = '';
+  }
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeLightbox(); });
+}
+
+// ===== 上に戻るボタン(footer.html読み込み後・要素がなければ何もしない) =====
+function initBackToTop() {
+  const btn = document.getElementById('backToTop');
+  if (!btn) return;
+
+  function toggle() {
+    if (window.scrollY > window.innerHeight * 0.6) {
+      btn.classList.add('show');
+    } else {
+      btn.classList.remove('show');
+    }
+  }
+
+  window.addEventListener('scroll', toggle, { passive: true });
+  btn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+  toggle();
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   initReveal();
   initMarquee();
+  initGalleryTabs();
+  initLightbox();
 });
 // ヘッダー/フッターはinclude.jsで非同期に読み込まれるため、
-// メニュー操作の初期化は読み込み完了イベントを待ってから行う
-document.addEventListener('includesLoaded', initMenu);
+// メニュー操作・戻るボタンの初期化は読み込み完了イベントを待ってから行う
+document.addEventListener('includesLoaded', () => {
+  initMenu();
+  initBackToTop();
+});
