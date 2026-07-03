@@ -1,0 +1,425 @@
+/* ==========================================================================
+   すてきな鳩ランド - 共通スタイルシート
+   ========================================================================== */
+
+:root{
+  --yellow:#FFDC74;
+  --yellow-light:#FFEEB5;
+  --cream:#FFF9EA;
+  --blue:#5A9BC4;
+  --navy:#3D5568;
+  --orange:#F0965A;
+  --pigeon:#9BAFC0;
+  --white:#FFFFFF;
+  --radius:22px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  font-family:'M PLUS Rounded 1c','Zen Maru Gothic',sans-serif;
+  color:var(--navy);
+  background:var(--cream);
+  line-height:1.8;
+  overflow-x:hidden;
+}
+h1,h2,h3{font-family:'Zen Maru Gothic',sans-serif}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+
+/* ===== ヘッダー ===== */
+header{
+  position:sticky;top:0;z-index:100;
+  background:rgba(255,249,234,.95);
+  backdrop-filter:blur(8px);
+  border-bottom:1px solid rgba(61,85,104,.18);
+}
+.header-inner{
+  max-width:1080px;margin:0 auto;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 20px;
+}
+.logo{
+  font-family:'Zen Maru Gothic';font-weight:900;font-size:1.15rem;
+  letter-spacing:.06em;
+}
+nav ul{display:flex;list-style:none;align-items:center}
+nav li{display:flex;align-items:center}
+nav li + li::before{
+  content:"";display:block;width:1px;height:16px;
+  background:rgba(61,85,104,.35);
+}
+nav a{
+  font-weight:700;font-size:.88rem;
+  padding:6px 16px;
+  transition:color .2s;
+}
+nav a:hover,nav a:focus-visible{color:var(--orange)}
+
+/* ハンバーガー(SPのみ表示) */
+.menu-btn{
+  display:none;
+  background:none;border:none;cursor:pointer;
+  width:44px;height:44px;position:relative;z-index:210;
+}
+.menu-btn span{
+  display:block;width:24px;height:3px;border-radius:2px;
+  background:var(--navy);margin:5px auto;
+  transition:transform .25s,opacity .25s;
+}
+.menu-btn[aria-expanded="true"] span:nth-child(1){transform:translateY(8px) rotate(45deg)}
+.menu-btn[aria-expanded="true"] span:nth-child(2){opacity:0}
+.menu-btn[aria-expanded="true"] span:nth-child(3){transform:translateY(-8px) rotate(-45deg)}
+
+/* ===== ドロワーメニュー ===== */
+.drawer{
+  position:fixed;top:0;right:0;z-index:200;
+  width:min(84vw,340px);height:100dvh;
+  background:var(--white);
+  box-shadow:-6px 0 24px rgba(61,85,104,.18);
+  transform:translateX(105%);
+  transition:transform .3s ease;
+  padding:76px 24px 24px;
+  overflow-y:auto;
+}
+.drawer.open{transform:none}
+.drawer ul{list-style:none;display:grid;gap:14px}
+.drawer a{
+  display:block;text-align:center;
+  font-weight:900;font-size:1.02rem;
+  padding:13px 10px;
+  border:3px solid var(--yellow);
+  border-radius:999px;
+  background:var(--cream);
+  transition:background .2s,transform .15s;
+}
+.drawer a:active{transform:scale(.97)}
+.drawer a:hover{background:var(--yellow-light)}
+.drawer-close{
+  position:absolute;top:16px;right:16px;
+  width:42px;height:42px;
+  border:none;border-radius:50%;
+  background:var(--yellow);color:var(--navy);
+  font-size:1.15rem;font-weight:900;
+  cursor:pointer;
+  transition:transform .15s;
+}
+.drawer-close:active{transform:scale(.9)}
+.drawer-overlay{
+  position:fixed;inset:0;z-index:150;
+  background:rgba(61,85,104,.35);
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.drawer-overlay.show{opacity:1;pointer-events:auto}
+
+/* ===== ふわっと表示(reveal) 共通 ===== */
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
+.reveal.on{opacity:1;transform:none}
+
+/* ===== フッター ===== */
+footer{
+  background:var(--navy);color:var(--cream);
+  padding:40px 20px 28px;text-align:center;
+}
+.foot-logo{display:flex;justify-content:center;margin-bottom:14px}
+.foot-logo img{width:200px}
+footer small{font-size:.78rem;opacity:.8}
+
+/* ===== レスポンシブ共通 ===== */
+@media(max-width:760px){
+  nav{display:none}
+  .menu-btn{display:block}
+}
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .reveal{opacity:1;transform:none}
+  .drawer{transition:none}
+}
+
+
+/* ==========================================================================
+   TOPページ (index.html)
+   ========================================================================== */
+.hero{
+  background:var(--yellow);
+  position:relative;
+  overflow:hidden;
+}
+.hero-inner{
+  max-width:1080px;margin:0 auto;
+  display:grid;grid-template-columns:1fr 1fr;
+  align-items:center;gap:12px;
+  padding:56px 20px 0;
+  min-height:620px;
+}
+.hero-text{padding-bottom:110px}
+.hero-logo img{
+  width:100%;max-width:460px;
+  animation:fadeUp .9s ease both;
+}
+.hero-intro{
+  margin-top:30px;max-width:420px;
+  font-weight:700;font-size:.98rem;line-height:2.1;
+  animation:fadeUp .9s .2s ease both;
+}
+.hero-visual{
+  align-self:end;justify-self:center;
+  animation:riseUp 1.1s .3s cubic-bezier(.22,.8,.36,1) both;
+}
+.hero-visual img{
+  max-height:600px;width:auto;
+  filter:drop-shadow(-14px 10px 0 rgba(61,85,104,.14));
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes riseUp{from{opacity:0;transform:translateY(80px)}to{opacity:1;transform:none}}
+
+/* 鳩の行進 */
+.parade{
+  position:absolute;left:0;bottom:14px;width:100%;
+  height:64px;pointer-events:none;
+}
+.parade .hato{
+  position:absolute;bottom:0;width:56px;height:56px;
+  background:url('../images/common/nyaruhato.png') no-repeat center bottom/contain;
+  animation:walk 22s linear infinite,bob .5s ease-in-out infinite alternate;
+}
+.parade .hato:nth-child(2){animation-delay:-3.5s,.12s;width:48px;height:48px}
+.parade .hato:nth-child(3){animation-delay:-7s,.24s}
+.parade .hato:nth-child(4){animation-delay:-10.5s,.05s;width:44px;height:44px}
+.parade .hato:nth-child(5){animation-delay:-14s,.3s}
+.parade .hato:nth-child(6){animation-delay:-17.5s,.18s;width:50px;height:50px}
+@keyframes walk{from{left:-8%}to{left:104%}}
+@keyframes bob{from{transform:translateY(0) scaleX(-1)}to{transform:translateY(-6px) scaleX(-1)}}
+
+/* ===== セクション共通(TOP) ===== */
+section{padding:72px 20px}
+.inner{max-width:1080px;margin:0 auto}
+.sec-title{
+  font-size:1.7rem;font-weight:900;text-align:center;margin-bottom:36px;
+  letter-spacing:.08em;
+}
+
+/* ===== ABOUT ===== */
+.about-grid{
+  display:grid;grid-template-columns:auto 1fr;gap:36px;align-items:center;
+  background:var(--white);border-radius:var(--radius);
+  border:3px solid var(--yellow);padding:32px;
+}
+.about-icon{
+  width:200px;height:200px;border-radius:50%;
+  background:var(--yellow);
+  overflow:hidden;display:flex;align-items:center;justify-content:center;
+}
+.about-icon img{
+  width:96%;height:auto;
+}
+.about-name{font-size:1.5rem;font-weight:900;margin-bottom:6px}
+.about-name span{font-size:.85rem;font-weight:700;color:var(--blue);display:block}
+.badges{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}
+.badge{
+  background:var(--yellow-light);border-radius:999px;
+  padding:6px 16px;font-weight:700;font-size:.88rem;
+}
+.about-more{
+  display:inline-block;margin-top:8px;font-weight:700;color:var(--blue);
+  border-bottom:2px dashed var(--blue);
+}
+
+/* ===== LINKS ===== */
+.links{background:var(--white)}
+.link-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+  gap:16px;
+}
+.link-btn{
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  background:var(--cream);border:3px solid var(--yellow);
+  border-radius:var(--radius);padding:22px 12px;
+  font-weight:900;font-size:1.02rem;
+  transition:transform .18s ease,box-shadow .18s ease,background .18s;
+  position:relative;
+  text-align: center;
+}
+.link-btn .icon{font-size:1.6rem;line-height:1}
+.link-btn:hover,.link-btn:focus-visible{
+  transform:translateY(-6px);
+  background:var(--yellow-light);
+  box-shadow:0 8px 0 rgba(240,150,90,.35);
+}
+.link-btn::after{
+  content:"";position:absolute;top:-26px;right:8px;width:36px;height:36px;
+  background:url('../images/common/nyaruhato.png') no-repeat center bottom/contain;
+  opacity:0;transform:translateY(8px);
+  transition:opacity .18s,transform .18s;
+}
+.link-btn:hover::after{opacity:1;transform:translateY(0)}
+.sub-links{
+  margin-top:26px;display:flex;flex-wrap:wrap;gap:10px;justify-content:center;
+}
+.sub-links a,.sub-links span{
+  font-size:.82rem;font-weight:700;color:var(--navy);
+  background:var(--cream);border-radius:999px;padding:6px 16px;
+  border:2px solid var(--pigeon);
+}
+.sub-links a:hover{background:var(--yellow-light)}
+.sub-links .paused{opacity:.55}
+
+/* ===== X TIMELINE ===== */
+.timeline-wrap{
+  max-width:520px;margin:0 auto;
+  background:var(--white);border:3px solid var(--yellow);
+  border-radius:var(--radius);padding:18px;
+}
+
+/* ===== レスポンシブ(TOP / SP) ===== */
+@media(max-width:760px){
+  .hero-inner{
+    grid-template-columns:1fr;
+    padding:36px 20px 0;
+    min-height:auto;gap:0;
+  }
+  .hero-text{padding-bottom:0}
+  .hero-logo img{max-width:340px;margin:0 auto}
+  .hero-intro{margin:22px auto 26px;font-size:.92rem}
+  .hero-visual{margin-top:-34px;padding-bottom:0;position:relative;z-index:1}
+  .hero-visual img{max-height:480px}
+  .parade{bottom:0;height:52px;z-index:2}
+  .parade .hato{width:44px;height:44px}
+  .about-grid{grid-template-columns:1fr;text-align:center;justify-items:center;padding:26px 18px}
+  .about-icon{width:160px;height:160px}
+}
+
+
+/* ==========================================================================
+   自己紹介ページ (personal.html)
+   ========================================================================== */
+/* ===== ページヒーロー(黄色バンド) ===== */
+.page-hero{
+  background:var(--yellow);
+  padding:44px 20px 0;
+  overflow:hidden;
+}
+.page-hero-inner{
+  max-width:1080px;margin:0 auto;
+  display:grid;grid-template-columns:1fr auto;
+  align-items:end;gap:20px;
+}
+.page-hero-text{padding-bottom:40px}
+.page-title{
+  font-size:1.55rem;font-weight:900;letter-spacing:.1em;
+  display:inline-block;
+  background:var(--white);
+  border-radius:999px;
+  padding:8px 30px;
+  box-shadow:0 5px 0 rgba(61,85,104,.18);
+  animation:fadeUp .8s ease both;
+}
+.page-lead{
+  margin-top:20px;max-width:520px;
+  font-weight:700;
+  animation:fadeUp .8s .15s ease both;
+}
+.page-hero-chibi{
+  align-self:end;
+  animation:riseUp 1s .25s cubic-bezier(.22,.8,.36,1) both;
+}
+.page-hero-chibi img{
+  max-height:260px;width:auto;
+}
+
+/* ===== コンテンツ(自己紹介) ===== */
+body.page-personal main{max-width:1080px;margin:0 auto;padding:56px 20px 0}
+
+.card{
+  background:var(--white);
+  border:3px solid var(--yellow);
+  border-radius:var(--radius);
+  padding:26px 30px;
+  margin-bottom:24px;
+}
+.card h2{
+  font-size:1.2rem;font-weight:900;
+  display:flex;align-items:center;gap:10px;
+  margin-bottom:14px;
+}
+.card h2::before{
+  content:"";width:12px;height:12px;border-radius:50%;
+  background:var(--orange);
+  flex-shrink:0;
+}
+.card:nth-of-type(even) h2::before{background:var(--blue)}
+.list{padding-left:1.3rem;margin:0}
+.list li{margin-bottom:8px}
+.list li::marker{color:var(--orange)}
+.card p + p{margin-top:8px}
+
+/* ===== 看板鳩マーキー ===== */
+.hato-marquee{
+  margin-top:56px;
+  background:var(--yellow);
+  padding:34px 0 26px;
+  overflow:hidden;
+}
+.marquee-track{
+  display:flex;gap:48px;
+  width:max-content;
+  animation:marchRight 30s linear infinite;
+}
+.marquee-track img{
+  width:150px;height:auto;flex-shrink:0;
+}
+/* 右方向へループ:JSが実測した1セット分の幅(--loop-width)だけ動かす */
+@keyframes marchRight{
+  from{transform:translateX(calc(-1 * var(--loop-width, 600px)))}
+  to{transform:translateX(0)}
+}
+
+/* ===== レスポンシブ(自己紹介 / SP) ===== */
+@media(max-width:760px){
+  .page-hero-inner{grid-template-columns:1fr;justify-items:center;text-align:center}
+  .page-hero-text{padding-bottom:0}
+  .page-hero-chibi img{max-height:210px}
+  .card{padding:22px 20px}
+  .marquee-track img{width:120px}
+}
+
+
+/* ==========================================================================
+   404ページ (404.html)
+   ========================================================================== */
+body.page-404{
+  min-height:100dvh;
+  display:flex;flex-direction:column;
+}
+body.page-404 main{
+  flex:1;
+  display:flex;align-items:center;justify-content:center;
+  padding:60px 20px;
+  text-align:center;
+}
+.notfound .hato{
+  width:110px;margin:0 auto 10px;
+  animation:bob404 .6s ease-in-out infinite alternate;
+}
+@keyframes bob404{from{transform:translateY(0)}to{transform:translateY(-8px)}}
+.notfound h1{
+  font-size:1.6rem;font-weight:900;margin-bottom:10px;
+}
+.notfound p{
+  font-weight:700;margin-bottom:28px;
+}
+.back-btn{
+  display:inline-block;
+  font-weight:900;font-size:1.05rem;
+  background:var(--yellow);
+  border:3px solid var(--navy);
+  border-radius:999px;
+  padding:14px 44px;
+  transition:transform .18s,box-shadow .18s,background .18s;
+  box-shadow:0 5px 0 var(--navy);
+}
+.back-btn:hover,.back-btn:focus-visible{
+  transform:translateY(-3px);
+  box-shadow:0 8px 0 var(--navy);
+  background:var(--yellow-light);
+}
+.back-btn:active{transform:translateY(2px);box-shadow:0 2px 0 var(--navy)}
